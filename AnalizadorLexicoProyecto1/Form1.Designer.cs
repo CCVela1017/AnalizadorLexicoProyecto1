@@ -28,12 +28,177 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            richTextBox1 = new RichTextBox();
+            button1 = new Button();
+            button2 = new Button();
+            dataGridView1 = new DataGridView();
+            token = new DataGridViewTextBoxColumn();
+            type = new DataGridViewTextBoxColumn();
+            cantidad = new DataGridViewTextBoxColumn();
+            label1 = new Label();
+            label2 = new Label();
+            openFileDialog1 = new OpenFileDialog();
+            richTextBox2 = new RichTextBox();
+            label3 = new Label();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            SuspendLayout();
+            // 
+            // richTextBox1
+            // 
+            richTextBox1.Location = new Point(12, 36);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.ReadOnly = true;
+            richTextBox1.Size = new Size(504, 407);
+            richTextBox1.TabIndex = 0;
+            richTextBox1.Text = "";
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.GreenYellow;
+            button1.Font = new Font("Times New Roman", 12F);
+            button1.Location = new Point(524, 36);
+            button1.Name = "button1";
+            button1.Size = new Size(300, 37);
+            button1.TabIndex = 1;
+            button1.Text = "Abrir archivo de texto";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.LightSteelBlue;
+            button2.Font = new Font("Times New Roman", 12F);
+            button2.Location = new Point(524, 79);
+            button2.Name = "button2";
+            button2.Size = new Size(300, 44);
+            button2.TabIndex = 2;
+            button2.Text = "Analizar léxico del documento";
+            button2.UseVisualStyleBackColor = false;
+            // 
+            // dataGridView1
+            // 
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Times New Roman", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { token, type, cantidad });
+            dataGridView1.Location = new Point(524, 176);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.ScrollBars = ScrollBars.None;
+            dataGridView1.Size = new Size(302, 193);
+            dataGridView1.TabIndex = 3;
+            // 
+            // token
+            // 
+            dataGridViewCellStyle2.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            token.DefaultCellStyle = dataGridViewCellStyle2;
+            token.HeaderText = "Token";
+            token.Name = "token";
+            // 
+            // type
+            // 
+            dataGridViewCellStyle3.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            type.DefaultCellStyle = dataGridViewCellStyle3;
+            type.HeaderText = "Tipo";
+            type.Name = "type";
+            // 
+            // cantidad
+            // 
+            dataGridViewCellStyle4.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cantidad.DefaultCellStyle = dataGridViewCellStyle4;
+            cantidad.HeaderText = "Cantidad";
+            cantidad.Name = "cantidad";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Times New Roman", 12F);
+            label1.Location = new Point(524, 144);
+            label1.Name = "label1";
+            label1.Size = new Size(129, 19);
+            label1.TabIndex = 4;
+            label1.Text = "Léxico encontrado: ";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Times New Roman", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(169, 9);
+            label2.Name = "label2";
+            label2.Size = new Size(172, 24);
+            label2.TabIndex = 5;
+            label2.Text = "Analizador Léxico";
+            // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // richTextBox2
+            // 
+            richTextBox2.Location = new Point(12, 472);
+            richTextBox2.Name = "richTextBox2";
+            richTextBox2.ReadOnly = true;
+            richTextBox2.Size = new Size(504, 96);
+            richTextBox2.TabIndex = 6;
+            richTextBox2.Text = "";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Times New Roman", 12F);
+            label3.Location = new Point(12, 450);
+            label3.Name = "label3";
+            label3.Size = new Size(72, 19);
+            label3.TabIndex = 7;
+            label3.Text = "SALIDA: ";
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            AutoSize = true;
+            BackColor = Color.AntiqueWhite;
+            ClientSize = new Size(836, 580);
+            Controls.Add(label3);
+            Controls.Add(richTextBox2);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(dataGridView1);
+            Controls.Add(button2);
+            Controls.Add(button1);
+            Controls.Add(richTextBox1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Name = "Form1";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Analizador Léxico";
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private RichTextBox richTextBox1;
+        private Button button1;
+        private Button button2;
+        private DataGridView dataGridView1;
+        private Label label1;
+        private Label label2;
+        private DataGridViewTextBoxColumn token;
+        private DataGridViewTextBoxColumn type;
+        private DataGridViewTextBoxColumn cantidad;
+        private OpenFileDialog openFileDialog1;
+        private RichTextBox richTextBox2;
+        private Label label3;
     }
 }
