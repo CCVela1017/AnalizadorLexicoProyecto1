@@ -32,6 +32,7 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             richTextBox1 = new RichTextBox();
             button1 = new Button();
             button2 = new Button();
@@ -55,7 +56,7 @@
             richTextBox1.Margin = new Padding(3, 4, 3, 4);
             richTextBox1.Name = "richTextBox1";
             richTextBox1.ReadOnly = true;
-            richTextBox1.Size = new Size(575, 541);
+            richTextBox1.Size = new Size(575, 615);
             richTextBox1.TabIndex = 0;
             richTextBox1.Text = "";
             // 
@@ -63,10 +64,10 @@
             // 
             button1.BackColor = Color.GreenYellow;
             button1.Font = new Font("Times New Roman", 12F);
-            button1.Location = new Point(599, 48);
+            button1.Location = new Point(599, 52);
             button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
-            button1.Size = new Size(343, 49);
+            button1.Size = new Size(609, 49);
             button1.TabIndex = 1;
             button1.Text = "Abrir archivo de texto";
             button1.UseVisualStyleBackColor = false;
@@ -77,10 +78,10 @@
             button2.BackColor = Color.LightSteelBlue;
             button2.Enabled = false;
             button2.Font = new Font("Times New Roman", 12F);
-            button2.Location = new Point(599, 105);
+            button2.Location = new Point(597, 109);
             button2.Margin = new Padding(3, 4, 3, 4);
             button2.Name = "button2";
-            button2.Size = new Size(343, 59);
+            button2.Size = new Size(609, 59);
             button2.TabIndex = 2;
             button2.Text = "Analizar léxico del documento";
             button2.UseVisualStyleBackColor = false;
@@ -104,7 +105,7 @@
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.ScrollBars = ScrollBars.Vertical;
-            dataGridView1.Size = new Size(345, 257);
+            dataGridView1.Size = new Size(607, 257);
             dataGridView1.TabIndex = 3;
             // 
             // token
@@ -123,7 +124,7 @@
             type.HeaderText = "Tipo";
             type.MinimumWidth = 6;
             type.Name = "type";
-            type.Width = 125;
+            type.Width = 350;
             // 
             // cantidad
             // 
@@ -156,15 +157,15 @@
             // 
             // openFileDialog1
             // 
-            openFileDialog1.FileName = "openFileDialog1";
+            openFileDialog1.Filter = "Archivos de Texto|*.txt";
             // 
             // richTextBox2
             // 
-            richTextBox2.Location = new Point(14, 629);
+            richTextBox2.Location = new Point(597, 536);
             richTextBox2.Margin = new Padding(3, 4, 3, 4);
             richTextBox2.Name = "richTextBox2";
             richTextBox2.ReadOnly = true;
-            richTextBox2.Size = new Size(575, 127);
+            richTextBox2.Size = new Size(609, 127);
             richTextBox2.TabIndex = 6;
             richTextBox2.Text = "";
             // 
@@ -172,7 +173,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Times New Roman", 12F);
-            label3.Location = new Point(14, 600);
+            label3.Location = new Point(597, 507);
             label3.Name = "label3";
             label3.Size = new Size(91, 22);
             label3.TabIndex = 7;
@@ -193,7 +194,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             BackColor = Color.AntiqueWhite;
-            ClientSize = new Size(955, 773);
+            ClientSize = new Size(1218, 677);
             Controls.Add(lURL);
             Controls.Add(label3);
             Controls.Add(richTextBox2);
@@ -204,6 +205,7 @@
             Controls.Add(button1);
             Controls.Add(richTextBox1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
@@ -221,12 +223,12 @@
         private DataGridView dataGridView1;
         private Label label1;
         private Label label2;
-        private DataGridViewTextBoxColumn token;
-        private DataGridViewTextBoxColumn type;
-        private DataGridViewTextBoxColumn cantidad;
         private OpenFileDialog openFileDialog1;
         private RichTextBox richTextBox2;
         private Label label3;
         private Label lURL;
+        private DataGridViewTextBoxColumn token;
+        private DataGridViewTextBoxColumn type;
+        private DataGridViewTextBoxColumn cantidad;
     }
 }

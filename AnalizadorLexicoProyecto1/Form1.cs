@@ -10,6 +10,39 @@ namespace AnalizadorLexicoProyecto1
             InitializeComponent();
         }
 
+
+
+        static bool BalancedBrackets(string expression)
+        {
+            Stack<char> stack = new Stack<char>();
+            int lines = 0;
+
+            foreach (char ch in expression)
+            {
+                if (ch == '(' || ch == '[' || ch == '{')
+                {
+                    stack.Push(ch);
+                }
+
+                else if (ch == ')' || ch == ']' || ch == '}')
+                {
+                    if (stack.Count == 0) return false;
+
+                    char top = stack.Pop();
+
+
+                    if ((ch == ')' && top != '(') ||
+                        (ch == ']' && top != '[') ||
+                        (ch == '}' && top != '{'))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return stack.Count == 0;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             try
@@ -99,12 +132,47 @@ namespace AnalizadorLexicoProyecto1
 
             }
 
+            if (!BalancedBrackets(richTextBox1.Text))
+            {
+                errors += "Error sintáctico, se esperaba }, ] o ).";
+            }
+
+            /*
+            foreach (string line in File.ReadAllLines(lURL.Text))
+            {
+
+                if (!string.IsNullOrEmpty(line))
+                {
+                    string[] words = line.Split(' ');
+                    foreach (string word in words)
+                    {
+                        if (word == "")
+                        {
+                            continue;
+                        } else if (word == ""){
+                            word
+                        }
+                        else
+                        {
+                            errors += $"La línea {i} es errónea.\n";
+                            break;
+                        }
+                    }
+                }
+                i++;
+
+
+            }
+            */
+
+
             if (errors != "")
             {
                 dataGridView1.Rows.Clear();
             }
 
             richTextBox2.Text = errors;
+
 
         }
     }
