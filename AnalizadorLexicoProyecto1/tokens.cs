@@ -6,7 +6,7 @@ public class Token
     public string[] reserved_words = ["entero", "decimal", "booleano", "cadena", "si"
         , "sino", "mientras", "hacer", "verdadero", "falso", "imprimir"];
     public string[] operators = ["+", "-", "*", "/", "%", "=", "==", "<", ">", "<=", ">=", "!=", "&&", "||"];
-    public string[] signs = ["(", ")", "{", "}", "\"", "", ";"];
+    public string[] signs = ["(", ")", "{", "}", "\"", "", ";", ","];
     
     public bool CheckReservedWords(string word) 
     {
