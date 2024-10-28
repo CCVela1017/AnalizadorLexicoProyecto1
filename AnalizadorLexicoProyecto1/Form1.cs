@@ -231,28 +231,52 @@ namespace AnalizadorLexicoProyecto1
             
             i = 1;
             // validacion de ifs
+            Stack<int> siStack = new Stack<int>(); // Pila para rastrear cada "si" pendiente de un "sino"
+
             foreach (string line in File.ReadAllLines(lURL.Text))
             {
-                
                 string line1 = SeparateText(line);
                 if (!string.IsNullOrEmpty(line1))
                 {
                     string[] words = line1.Split(' ');
-                    
+
                     // Validación para "si"
                     if (words[0] == "si")
                     {
+                        // Agregar el índice de la línea a la pila cuando se encuentra un "si"
+                        siStack.Push(i);
+
                         if (words.Length < 4 || words[1] != "(" || words[words.Length - 2] != ")" || words[words.Length - 1] != "{")
                         {
-                            MessageBox.Show(words.ToString());
-                            errors += $"Error en la sintaxis de 'si' en la línea {i}.\n";
+                            errors += $"Error en la sintaxis de 'si' en la línea {i}. Formato esperado: si (condicion) {{...}} \n";
                         }
                         else
                         {
-                            string condition = string.Join(" ", words.Skip(2).Take(words.Length - 4)); // Extrae la condición entre paréntesis
-                            if (!ValidateCondition(condition, i, errors)) // Llama a la función de validación de la condición
+                            string condition = string.Join(" ", words.Skip(2).Take(words.Length - 4));
+
+                            if (!ValidateCondition(condition, i, errors))
                             {
-                                errors += $"Error en la condición de 'si' en la línea {i}. Condición inválida: {condition} \n";
+                                errors += $"Error en la condición de 'si' en la línea {i}. Condición inválida o contiene variables sin asignar: {condition} \n";
+                            }
+                        }
+                    }
+                    // Validación para "sino"
+                    else if (words[0] == "sino")
+                    {
+                        // Verifica que haya un "si" sin cerrar pendiente en la pila
+                        if (siStack.Count == 0)
+                        {
+                            errors += $"Error en la sintaxis de 'sino' en la línea {i}. 'sino' debe seguir a un bloque 'si'.\n";
+                        }
+                        else
+                        {
+                            // Extrae el "si" correspondiente de la pila
+                            siStack.Pop();
+
+                            // Verifica que "sino" esté seguido únicamente por "{"
+                            if (words.Length != 2 || words[1] != "{")
+                            {
+                                errors += $"Error en la sintaxis de 'sino' en la línea {i}. Formato esperado: sino {{...}} \n";
                             }
                         }
                     }
@@ -261,19 +285,29 @@ namespace AnalizadorLexicoProyecto1
                     {
                         if (words.Length < 4 || words[1] != "(" || words[words.Length - 2] != ")" || words[words.Length - 1] != "{")
                         {
-                            errors += $"Error en la sintaxis de 'mientras' en la línea {i}.\n";
+                            errors += $"Error en la sintaxis de 'mientras' en la línea {i}. Formato esperado: mientras (condicion) {{...}} \n";
                         }
                         else
                         {
-                            string condition = string.Join(" ", words.Skip(2).Take(words.Length - 4)); // Extrae la condición entre paréntesis
-                            if (!ValidateCondition(condition, i, errors)) // Llama a la función de validación de la condición
+                            string condition = string.Join(" ", words.Skip(2).Take(words.Length - 4));
+                            if (!ValidateCondition(condition, i, errors))
                             {
-                                errors += $"Error en la condición de 'mientras' en la línea {i}. Condición inválida: {condition} \n";
+                                errors += $"Error en la condición de 'mientras' en la línea {i}. Condición inválida o contiene variables sin asignar: {condition} \n";
                             }
                         }
                     }
                 }
                 i++;
+            }
+
+            // Verificación final: si queda algún "si" en la pila, significa que faltó un "sino" o "}"
+            if (siStack.Count > 0)
+            {
+                while (siStack.Count > 0)
+                {
+                    int unclosedIfLine = siStack.Pop();
+                    errors += $"Advertencia: El bloque 'si' en la línea {unclosedIfLine} no tiene un 'sino' correspondiente.\n";
+                }
             }
 
             i = 1;
