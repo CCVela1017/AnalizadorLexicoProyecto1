@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using Tokens;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace AnalizadorLexicoProyecto1
 {
     public partial class Form1 : Form
@@ -58,6 +59,45 @@ namespace AnalizadorLexicoProyecto1
 
             return stack.Count == 0;
         }
+        private bool ValidateCondition(string condition, int lineNumber, string errors)
+        {
+            // Verifica balance de paréntesis
+            if (!BalancedBrackets(condition))
+                return false;
+
+            // Expresión regular para identificar términos de la condición
+            string pattern = @"(\b\w+\b|\&\&|\|\||==|!=|<=|>=|<|>)";
+            var matches = Regex.Matches(condition, pattern);
+
+            bool lastWasOperator = true; // Controla el orden entre operadores y operandos
+            foreach (Match match in matches)
+            {
+                string term = match.Value;
+
+                if (term == "&&" || term == "||" || term == "==" || term == "!=" || term == "<=" || term == ">=" || term == "<" || term == ">")
+                {
+                    if (lastWasOperator) return false; // Dos operadores consecutivos son inválidos
+                    lastWasOperator = true;
+                }
+                else
+                {
+                    // Verifica que el término sea un identificador o un número válido
+                    if (!tokens.CheckIdentifiers(term) && !tokens.CheckNumbers(term))
+                        return false;
+
+                    // Verifica que el identificador esté en la lista de variables previamente asignadas
+                    if (!tokens.CheckNumbers(term) && !identifiers.Contains(term))
+                    {
+                        errors += $"Error en la línea {lineNumber}: La variable '{term}' no ha sido asignada antes de su uso en la condición.\n";
+                        return false;
+                    }
+
+                    lastWasOperator = false;
+                }
+            }
+
+            return !lastWasOperator; // La expresión debe terminar con un operando
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -107,7 +147,7 @@ namespace AnalizadorLexicoProyecto1
 
             // validacion de tokens
             foreach (string line in File.ReadAllLines(lURL.Text))
-            {   
+                {   
                 string line1 = SeparateText(line);
                 if (!string.IsNullOrEmpty(line1))
                 {
@@ -188,6 +228,53 @@ namespace AnalizadorLexicoProyecto1
                 }
                 i++;
             }
+            
+            i = 1;
+            // validacion de ifs
+            foreach (string line in File.ReadAllLines(lURL.Text))
+            {
+                
+                string line1 = SeparateText(line);
+                if (!string.IsNullOrEmpty(line1))
+                {
+                    string[] words = line1.Split(' ');
+                    
+                    // Validación para "si"
+                    if (words[0] == "si")
+                    {
+                        if (words.Length < 4 || words[1] != "(" || words[words.Length - 2] != ")" || words[words.Length - 1] != "{")
+                        {
+                            MessageBox.Show(words.ToString());
+                            errors += $"Error en la sintaxis de 'si' en la línea {i}.\n";
+                        }
+                        else
+                        {
+                            string condition = string.Join(" ", words.Skip(2).Take(words.Length - 4)); // Extrae la condición entre paréntesis
+                            if (!ValidateCondition(condition, i, errors)) // Llama a la función de validación de la condición
+                            {
+                                errors += $"Error en la condición de 'si' en la línea {i}. Condición inválida: {condition} \n";
+                            }
+                        }
+                    }
+                    // Validación para "mientras"
+                    else if (words[0] == "mientras")
+                    {
+                        if (words.Length < 4 || words[1] != "(" || words[words.Length - 2] != ")" || words[words.Length - 1] != "{")
+                        {
+                            errors += $"Error en la sintaxis de 'mientras' en la línea {i}.\n";
+                        }
+                        else
+                        {
+                            string condition = string.Join(" ", words.Skip(2).Take(words.Length - 4)); // Extrae la condición entre paréntesis
+                            if (!ValidateCondition(condition, i, errors)) // Llama a la función de validación de la condición
+                            {
+                                errors += $"Error en la condición de 'mientras' en la línea {i}. Condición inválida: {condition} \n";
+                            }
+                        }
+                    }
+                }
+                i++;
+            }
 
             i = 1;
             // validacion de funciones y su numero de argumentos
@@ -219,7 +306,6 @@ namespace AnalizadorLexicoProyecto1
                             if (words[words.Length - 1] == "{")
                             {
                                 functions[words[1]] = cantParams;
-                                MessageBox.Show(words[1], cantParams.ToString());
                             } else
                             {
                                 errors += "Se esperaba { para abrir la funcion en la linea " + i.ToString() + "\n";
